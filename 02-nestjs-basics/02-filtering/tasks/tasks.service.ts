@@ -40,5 +40,18 @@ export class TasksService {
     status?: TaskStatus,
     page?: number,
     limit?: number,
-  ): Task[] {}
+  ): Task[] {
+
+    let result = this.tasks;
+
+    if(status) {
+      result = result.filter((task: Task) => task.status === status)
+    }
+
+    if(page && limit) {
+      result = result.slice(page - 1, page * limit);
+    }
+
+    return result;
+  }
 }
