@@ -13,7 +13,11 @@ export class TaskService {
   ) {}
 
   create(createTaskDto: CreateTaskDto) {
-    return console.log(createTaskDto);
+    const task = new Task();
+
+    task.title = createTaskDto.title;
+    task.description = createTaskDto.description;
+    this.tasksRepository.save(task);
   }
 
   async findAll() {
