@@ -1,16 +1,28 @@
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 import { CreateTaskDto } from "./dto/create-task.dto";
 import { UpdateTaskDto } from "./dto/update-task.dto";
+import { Task } from "./entities/task.entity";
 
 @Injectable()
-export class TasksService {
-  create(createTaskDto: CreateTaskDto) {}
+export class TaskService {
+  constructor(
+    @InjectRepository(Task) 
+    private tasksRepository: Repository<Task>,
+  ) {}
 
-  async findAll() {}
+  create(createTaskDto: CreateTaskDto) {
+    return console.log(createTaskDto);
+  }
 
-  async findOne(id: number) {}
+  async findAll() {
+    return await this.tasksRepository.find();
+  }
 
-  async update(id: number, updateTaskDto: UpdateTaskDto) {}
+  async findOne() {}
 
-  async remove(id: number): Promise<void> {}
+  async update() {}
+
+  async remove() {}
 }
