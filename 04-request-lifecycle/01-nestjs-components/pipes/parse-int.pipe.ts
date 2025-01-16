@@ -1,5 +1,5 @@
-import { PipeTransform } from "@nestjs/common";
+// import { PipeTransform } from "@nestjs/common";
 
-export class ParseIntPipe implements PipeTransform {
-  transform(value: string): number {}
-}
+// export class ParseIntPipe implements PipeTransform {
+//   transform(value: string): number {}
+// }
