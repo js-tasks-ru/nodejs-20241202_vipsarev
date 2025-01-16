@@ -18,15 +18,26 @@ export class TaskService {
     task.title = createTaskDto.title;
     task.description = createTaskDto.description;
     this.tasksRepository.save(task);
+
+    return task;
   }
 
   async findAll() {
     return await this.tasksRepository.find();
   }
 
-  async findOne() {}
+  async findOne(id: number) {
+    return await this.tasksRepository.findOne({ where: { id }});
+  }
 
-  async update() {}
+  async update(id: number, task: Task): Promise<Task> {
+    console.log("service method was called");
+    
+    await this.tasksRepository.update(id, task);
+    return this.findOne(id);
+  }
 
-  async remove() {}
+  async remove(id: number) {
+    return await this.tasksRepository.delete(id);
+  }
 }
