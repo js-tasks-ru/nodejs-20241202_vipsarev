@@ -29,7 +29,7 @@ export class TaskService {
     return await this.tasksRepository.findOne({ where: { id }});
   }
 
-  async update(id: number, task: Task): Promise<Task> {
+  async update(id: number, task: UpdateTaskDto): Promise<Task> {
     await this.tasksRepository.update(id, task);
     return this.findOne(id);
   }

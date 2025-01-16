@@ -11,8 +11,8 @@ import {
 } from "@nestjs/common";
 import { TaskService } from "./tasks.service";
 import { CreateTaskDto } from "./dto/create-task.dto";
+import { UpdateTaskDto } from "./dto/update-task.dto";
 import { Task } from "./entities/task.entity";
-import { TaskValidator } from "./task.validator";
 import { ValidationPipe } from "@nestjs/common";
 
 @Controller("tasks")
@@ -48,7 +48,7 @@ export class TasksController {
       whitelist: true,
     }),
   )
-  async update(@Param("id") id: string, @Body() task: TaskValidator) {
+  async update(@Param("id") id: string, @Body() task: UpdateTaskDto) {
     const result = await this.tasksService.findOne(+id);
 
     if(!result) {
