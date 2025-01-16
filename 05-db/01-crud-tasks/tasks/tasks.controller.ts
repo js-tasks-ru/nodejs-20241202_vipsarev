@@ -33,7 +33,7 @@ export class TasksController {
   findOne(@Param("id") id) {
     const result = this.tasksService.findOne(+id);
 
-    if(!result) {
+    if(result) {
       return result;
     }
 
@@ -53,8 +53,10 @@ export class TasksController {
   }
 
   @Delete(":id")
-  remove(@Param("id") id: string) {
-    const result = this.tasksService.findOne(+id);
+  async remove(@Param("id") id: string) {
+    const result = await this.tasksService.findOne(+id);
+
+    console.log(result);
 
     if(!result) {
       return new NotFoundException();
