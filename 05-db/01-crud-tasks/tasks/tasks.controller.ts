@@ -30,14 +30,14 @@ export class TasksController {
   }
 
   @Get(":id")
-  findOne(@Param("id") id) {
-    const result = this.tasksService.findOne(+id);
+  async findOne(@Param("id") id) {
+    const result = await this.tasksService.findOne(+id);
 
     if(result) {
       return result;
     }
 
-    return new NotFoundException();
+    throw new NotFoundException();
   }
 
   @Patch(":id")
@@ -48,23 +48,33 @@ export class TasksController {
       whitelist: true,
     }),
   )
-  update(@Param("id") id: string, @Body() task: TaskValidator): Promise<Task> {
+  async update(@Param("id") id: string, @Body() task: TaskValidator) {
+    const result = await this.tasksService.findOne(+id);
+
+    if(!result) {
+      throw new NotFoundException();
+    }
+
     return this.tasksService.update(+id, task);
   }
 
+  @UsePipes(
+    new ValidationPipe({
+      forbidNonWhitelisted: true,
+      forbidUnknownValues: true,
+      whitelist: true,
+    }),
+  )
   @Delete(":id")
   async remove(@Param("id") id: string) {
     const result = await this.tasksService.findOne(+id);
 
-    console.log(result);
-
     if(!result) {
-      return new NotFoundException();
+      throw new NotFoundException();
     }
 
-    try {
-      this.tasksService.remove(+id);
-      return { message: "Task deleted successfully" };
-    } catch (e) {}
+    await this.tasksService.remove(+id);
+
+    return { message: "Task deleted successfully" };
   }
 }

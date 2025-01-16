@@ -12,14 +12,13 @@ export class TaskService {
     private tasksRepository: Repository<Task>,
   ) {}
 
-  create(createTaskDto: CreateTaskDto) {
+  async create(createTaskDto: CreateTaskDto) {
     const task = new Task();
 
     task.title = createTaskDto.title;
     task.description = createTaskDto.description;
-    this.tasksRepository.save(task);
-
-    return task;
+    task.isCompleted = false;
+    return await this.tasksRepository.save(task);
   }
 
   async findAll() {
