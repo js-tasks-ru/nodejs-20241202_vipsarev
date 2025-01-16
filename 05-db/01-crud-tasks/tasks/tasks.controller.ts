@@ -54,6 +54,12 @@ export class TasksController {
 
   @Delete(":id")
   remove(@Param("id") id: string) {
+    const result = this.tasksService.findOne(+id);
+
+    if(!result) {
+      return new NotFoundException();
+    }
+
     try {
       this.tasksService.remove(+id);
       return { message: "Task deleted successfully" };
