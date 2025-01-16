@@ -7,6 +7,7 @@ import {
   Body,
   Param,
   UsePipes,
+  NotFoundException
 } from "@nestjs/common";
 import { TaskService } from "./tasks.service";
 import { CreateTaskDto } from "./dto/create-task.dto";
@@ -30,7 +31,13 @@ export class TasksController {
 
   @Get(":id")
   findOne(@Param("id") id) {
-    return this.tasksService.findOne(+id);
+    const result = this.tasksService.findOne(+id);
+
+    if(!result) {
+      return result;
+    }
+
+    return new NotFoundException();
   }
 
   @Patch(":id")

@@ -31,8 +31,6 @@ export class TaskService {
   }
 
   async update(id: number, task: Task): Promise<Task> {
-    console.log("service method was called");
-    
     await this.tasksRepository.update(id, task);
     return this.findOne(id);
   }
