@@ -18,6 +18,7 @@ export class TaskService {
     task.title = createTaskDto.title;
     task.description = createTaskDto.description;
     task.isCompleted = false;
+    
     return await this.tasksRepository.save(task);
   }
 
